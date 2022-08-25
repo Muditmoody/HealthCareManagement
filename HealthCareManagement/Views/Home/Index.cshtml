@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Components;
+@inject NavigationManager MyNavigationManager
+@Model IEnumerable<string>
+
+	@{
+		Layout = null;
+
+	}
+
+	<!DOCTYPE html>
+
+	<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<title>Index</title>
+
+		<ul>
+			@foreach (var item in Model)
+			{
+				<li>
+					<a href="@item">@item</a>
+				</li>
+			}
+		</ul>
+
+	</head>
+	<body>
+	</body>
+</html>

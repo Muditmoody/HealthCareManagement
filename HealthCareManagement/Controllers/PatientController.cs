@@ -26,25 +26,16 @@ namespace HealthCareManagement.Controllers
             _queryBuilder = queryBuilder;
         }
 
-        [HttpGet("/GetPatients")]
-        //[Route("GetPatients")]
+        [HttpGet("GetPatients")]
         public IEnumerable<Patient> GetP()
         {
             _logger.LogDebug("Get patient info");
-            //Func<SqlDataReader, Patient> mapper = (reader) =>
-            //{
-            //    return new Patient
-            //    {
-            //        PatientId = (int)reader.GetValue(0)
-            //    };
-            //};
             var sql = _queryBuilder.GetQueryFromResouce("Patient.sql");
 
             return _databaseProvider.ExecuteQuery(sql, Patient.Map);
         }
 
-        [HttpGet("/GetPatients2/{name}")]
-        //[Route("GetPatients")]
+        [HttpGet("GetPatients2/{name}")]
         public IEnumerable<Patient> GetP2(string name)
         {
             _logger.LogDebug("Get patient info");

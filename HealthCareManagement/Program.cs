@@ -18,8 +18,11 @@ namespace HealthCareManagement
             builder.Services.AddSingleton<DatabaseProvider>();
             builder.Services.AddScoped<QueryBuilder>();
 
+
             var app = builder.Build();
 
+
+            app.Urls.Add("https://localhost:5001/");
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -36,7 +39,6 @@ namespace HealthCareManagement
             app.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
             app.Run();
         }
     }

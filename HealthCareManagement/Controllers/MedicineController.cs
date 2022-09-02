@@ -7,13 +7,13 @@ namespace HealthCareManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PatientController : ControllerBase
+    public class MedicineController : ControllerBase
     {
-        private readonly ILogger<PatientController> _logger;
+        private readonly ILogger<MedicineController> _logger;
         private readonly IConfiguration _configuration;
         private readonly DatabaseProvider _databaseProvider;
         private readonly QueryBuilder _queryBuilder;
-        public PatientController(ILogger<PatientController> logger, IConfiguration configuration, DatabaseProvider databaseProvider, QueryBuilder queryBuilder)
+        public MedicineController(ILogger<MedicineController> logger, IConfiguration configuration, DatabaseProvider databaseProvider, QueryBuilder queryBuilder)
         {
             _logger = logger;
             _configuration = configuration;
@@ -21,13 +21,18 @@ namespace HealthCareManagement.Controllers
             _queryBuilder = queryBuilder;
         }
 
-        [HttpGet("GetPatients")]
-        public IEnumerable<Patient> GetP()
+        [HttpGet("GetDosage")]
+        public IEnumerable<DosagePeriods> GetDosage([FromQuery] DateTime startDate = default, [FromQuery] DateTime endDate = default)
         {
-            _logger.LogDebug("Get patient info");
-            var sql = _queryBuilder.GetQueryFromResouce("Patient.sql");
 
-            return _databaseProvider.ExecuteQuery(sql, Patient.Map);
+            _logger.LogDebug("Get Doage period`");
+            var sql = _queryBuilder.GetQueryFromResouce("DosageOfMeds.sql");
+
+            startDate = startDate == default ? DateTime.Today.AddYears(-10) : startDate;
+            endDate = endDate == default ? DateTime.Today.AddYears(10) : endDate;
+
+            sql = string.Format(sql, startDate.ToString("dd-MMM-yyyy"), endDate.ToString("dd-MMM-yyyy"));
+            return _databaseProvider.ExecuteQuery(sql, DosagePeriods.Map);
         }
 
         [HttpGet("GetPatients2/{name}")]

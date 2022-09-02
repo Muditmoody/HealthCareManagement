@@ -34,7 +34,9 @@ namespace HealthCareManagement.Controllers
                 return $"{_baseUrl}/{a.ControllerName}/{a.ActionName}/";
             }
             );
-            return View(paths);
+
+            var dict = paths.Select((value, index) => new { index, value }).ToDictionary(i => $"Query {i.index}", i => i.value);
+            return View(dict);
         }
 
         public IActionResult ViewP()
@@ -54,8 +56,31 @@ namespace HealthCareManagement.Controllers
                     returnObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Patient>>(data);
                 }
             }
-            return View(returnObj);
+            ViewData["Title"] = "Patient";
+            return View("ViewP", returnObj);
         }
+
+        public IActionResult GetDosages()
+        {
+
+            var returnObj = new List<DosagePeriods>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync($"{_baseUrl}/api/Medicine/GetDosage").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    returnObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DosagePeriods>>(data);
+                }
+            }
+            ViewData["Title"] = "Dosages";
+            return View("ViewP", returnObj);
+        }
+
 
         public IActionResult View2()
         {
@@ -74,9 +99,11 @@ namespace HealthCareManagement.Controllers
 
             var sql = _queryBuilder.GetQueryFromResouce("Patient.sql");
 
-            var a = _databaseProvider.ExecuteQuery(sql, Patient.Map).ToArray();
+            var a = _databaseProvider.ExecuteQuery(sql, Patient.Map).ToList();
 
-            return View(a);
+            ViewData["Title"] = "Patient2";
+
+            return View("ViewP", a);
         }
 
     }

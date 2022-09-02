@@ -4,14 +4,18 @@ using System.Text.Json.Serialization;
 
 namespace HealthCareManagement.Models
 {
-    public class Patient
+    public class Patient : HealthManagamentObjects
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "PatientId")]
         [ModelViewColumn(DiplayName = "PatientId", ToDisplay = true)]
         public int PatientId { get; set; }
 
         [ModelViewColumn(DiplayName = "PatientName", ToDisplay = true)]
-        public string PatientName { get; set; } = string.Empty;
+        public string PatientName { get => $"{FirstName} {LastName}"; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
 
         [ModelViewColumn(DiplayName = "DateOfBirth", ToDisplay = true)]
         public DateTime DateOfBirth { get; set; }
@@ -29,10 +33,11 @@ namespace HealthCareManagement.Models
         {
         }
 
-        public Patient(int patientId, string patientName, DateTime dateOfBirth, string gender, string primaryContact, string secondaryContact)
+        public Patient(int patientId, string firstName, string lastName, DateTime dateOfBirth, string gender, string primaryContact, string secondaryContact)
         {
             PatientId = patientId;
-            PatientName = patientName;
+            FirstName = firstName;
+            LastName = lastName;
             DateOfBirth = dateOfBirth;
             Gender = gender;
             PrimaryContact = primaryContact;
@@ -42,9 +47,12 @@ namespace HealthCareManagement.Models
         public static Patient Map(SqlDataReader reader) => new Patient
         {
             PatientId = reader.GetFieldValue<int>(reader.GetOrdinal("patient_id")),
-            PatientName = reader.GetFieldValue<string>(reader.GetOrdinal("patient_name")),
+            FirstName = reader.GetFieldValue<string>(reader.GetOrdinal("first_name")),
+            LastName = reader.GetFieldValue<string>(reader.GetOrdinal("last_name")),
             DateOfBirth = reader.GetFieldValue<DateTime>(reader.GetOrdinal("date_of_birth")),
-            Gender = reader.GetFieldValue<string>(reader.GetOrdinal("gender"))
+            Gender = reader.GetFieldValue<int>(reader.GetOrdinal("gender")).ToString(),
+            PrimaryContact = reader.GetFieldValue<string>(reader.GetOrdinal("primary_contact")),
+            SecondaryContact = reader.GetFieldValue<string>(reader.GetOrdinal("secondary_contact")),
         };
     }
 }

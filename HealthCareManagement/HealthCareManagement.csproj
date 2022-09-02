@@ -7,10 +7,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Queries\DosageOfMeds.sql" />
+	  <None Remove="Queries\DosageOfMedsDependentOnInsurance.sql" />
 	  <None Remove="Queries\Patient.sql" />
+	  <None Remove="Queries\ValidMedicalReports.sql" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Queries\ValidMedicalReports.sql" />
+	  <EmbeddedResource Include="Queries\DosageOfMedsDependentOnInsurance.sql" />
+	  <EmbeddedResource Include="Queries\DosageOfMeds.sql" />
 	  <EmbeddedResource Include="Queries\Patient.sql" />
 	</ItemGroup>
 

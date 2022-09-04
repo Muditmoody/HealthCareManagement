@@ -81,6 +81,47 @@ namespace HealthCareManagement.Controllers
             return View("ViewP", returnObj);
         }
 
+        public IActionResult GetDosageAndInsurance()
+        {
+
+            var returnObj = new List<MedInsurance>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync($"{_baseUrl}/api/Medicine/GetDosageAndInsurance?medicineReference=_").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    returnObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MedInsurance>>(data);
+                }
+            }
+            ViewData["Title"] = "Dosage and Insurance";
+            return View("ViewP", returnObj);
+        }
+
+        public IActionResult GetPatientMedUsage()
+        {
+
+            var returnObj = new List<PatientMedUsage>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync($"{_baseUrl}/api/Medicine/GetPatientMedUsage").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    returnObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PatientMedUsage>>(data);
+                }
+            }
+            ViewData["Title"] = "Patient Med Dosage ";
+            return View("ViewP", returnObj);
+        }
 
         public IActionResult View2()
         {

@@ -9,11 +9,25 @@
 	<ItemGroup>
 	  <None Remove="Queries\DosageOfMeds.sql" />
 	  <None Remove="Queries\DosageOfMedsDependentOnInsurance.sql" />
+	  <None Remove="Queries\DrugMarketByRegion.sql" />
+	  <None Remove="Queries\HospitalProcedurePhysicians.sql" />
+	  <None Remove="Queries\MedicalConditionByRegionPatients.sql" />
 	  <None Remove="Queries\Patient.sql" />
+	  <None Remove="Queries\PatientConditionPresOrProc.sql" />
+	  <None Remove="Queries\PatientDocRegion.sql" />
+	  <None Remove="Queries\PatientMedUsage.sql" />
+	  <None Remove="Queries\PhysicianProcSpecialization.sql" />
 	  <None Remove="Queries\ValidMedicalReports.sql" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Queries\PatientDocRegion.sql" />
+	  <EmbeddedResource Include="Queries\PhysicianProcSpecialization.sql" />
+	  <EmbeddedResource Include="Queries\PatientConditionPresOrProc.sql" />
+	  <EmbeddedResource Include="Queries\MedicalConditionByRegionPatients.sql" />
+	  <EmbeddedResource Include="Queries\DrugMarketByRegion.sql" />
+	  <EmbeddedResource Include="Queries\HospitalProcedurePhysicians.sql" />
+	  <EmbeddedResource Include="Queries\PatientMedUsage.sql" />
 	  <EmbeddedResource Include="Queries\ValidMedicalReports.sql" />
 	  <EmbeddedResource Include="Queries\DosageOfMedsDependentOnInsurance.sql" />
 	  <EmbeddedResource Include="Queries\DosageOfMeds.sql" />

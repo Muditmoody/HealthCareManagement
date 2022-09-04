@@ -10,13 +10,13 @@ namespace HealthCareManagement.Models
         [ModelViewColumn(DiplayName = "MedicineName", ToDisplay = true)]
         public string MedicineName { get; set; }
 
-        [ModelViewColumn(DiplayName = "Dosage", ToDisplay = true)]
+        [ModelViewColumn(DiplayName = "Total_Usage", ToDisplay = true)]
         public double Dosage { get; set; }
 
-        [ModelViewColumn(DiplayName = "PrescriptionStartDate", ToDisplay = true)]
+        [ModelViewColumn(DiplayName = "PrescriptionStartDate", ToDisplay = false)]
         public DateTime PrescriptionStartDate { get; set; }
 
-        [ModelViewColumn(DiplayName = "PrescriptionEndDate", ToDisplay = true)]
+        [ModelViewColumn(DiplayName = "PrescriptionEndDate", ToDisplay = false)]
         public DateTime PrescriptionEndDate { get; set; }
 
         public DosagePeriods()

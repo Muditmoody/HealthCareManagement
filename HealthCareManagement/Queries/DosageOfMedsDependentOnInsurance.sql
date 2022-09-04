@@ -1,15 +1,18 @@
 ﻿--Is some drug usage amount insurance policy dependent (groupBy policy_ref to see the usage amount of a certain drug)
 
-SELECT raw_data.Medicine_ID, raw_data.hasInsurance, raw_data.total_uage, m.Medicine_Name from 
+--Ylfa
+
+SELECT raw_data.Medicine_ID, raw_data.hasInsurance, CONVERT(float,raw_data.total_usage) as Total_Usage, m.Medicine_Name
+FROM
 (
 	SELECT pr.Medicine_ID,
-		CASE WHEN count(irp.Policy_Reference_Number) >0 THEN 'Yes'
+		CASE WHEN count(irp.Policy_Reference_Number) > 0 THEN 'Yes'
 			 ELSE 'NO'
 		END
 		AS hasInsurance,
-	   sum(pr.Dosage) AS total_uage
-	FROM Prescription pr 
-	JOIN Medical_report mr ON (pr.Report_ID = mr.Report_ID) 
+	   sum(pr.Dosage) AS Total_Usage
+	FROM Prescription pr
+	JOIN Medical_report mr ON (pr.Report_ID = mr.Report_ID)
 	JOIN Patient p ON (mr.Patient_ID  =  p.Patient_ID)
 	LEFT JOIN Insurance_Policy irp ON (irp.Patient_ID = p.Patient_ID)
 	GROUP BY pr.Medicine_ID
